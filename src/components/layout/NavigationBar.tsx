@@ -106,7 +106,12 @@ import {
 
 import { Modal } from '~context/modal-ui/components/Modal';
 import { openTransak } from '../alert/Transak';
-import { BuyNearButton } from '../button/Button';
+import { ButtonTextWrapper, BuyNearButton, SolidButton } from '../button/Button';
+import Notification from '~components/icon/Notification';
+import { Toggle } from '~components/toggle';
+import Settings from '~components/icon/SettingsIcon';
+import Back from '~components/icon/Back';
+import NotificationButton from '~nnp/NotificationButton';
 
 const config = getConfig();
 
@@ -1159,6 +1164,9 @@ function NavigationBar() {
           />
           .
         </div>
+        <div className='w-full p-4 flex m-auto bg-yellow-500'>
+            This is a ref-finance clone developed to test notifications. Please don't make big transactions.
+        </div>
         <nav
           className="flex items-center justify-between px-9 col-span-8"
           style={{
@@ -1227,6 +1235,9 @@ function NavigationBar() {
             )}
 
             <USNButton />
+            <div className='mr-2'>
+                <NotificationButton />
+            </div>
             <AccountEntry
               hasBalanceOnRefAccount={hasBalanceOnRefAccount}
               setShowWalletSelector={setShowWalletSelector}
@@ -1241,8 +1252,9 @@ function NavigationBar() {
               <ConnectDot />
 
               <AuroraEntry hasBalanceOnAurora={hasAuroraBalance} />
+              
             </div>
-
+            
             <MoreMenu />
           </div>
         </nav>
