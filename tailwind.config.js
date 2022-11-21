@@ -212,6 +212,9 @@ module.exports = {
         40: '10rem',
         32: '8rem',
       },
+      zIndex: {
+        '1000': '1000',
+      }
     },
     plugins: [],
   },

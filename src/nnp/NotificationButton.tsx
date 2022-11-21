@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { Fragment, ReactElement, useContext, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { SolidButton } from "~components/button/Button";
@@ -24,7 +25,7 @@ type SettingsProps = {
 
 function EventList({ events, openSettings }: EventListProps) {
     const parser = new DOMParser();
-
+    const relativeTime = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
     return <Fragment>
         <div className="">
             <div className='flex justify-between px-2 pb-4 w-80 text-white '>
@@ -43,7 +44,7 @@ function EventList({ events, openSettings }: EventListProps) {
                             {parser.parseFromString(event?.message,'text/html').getElementsByTagName('p')[0]?.textContent}
                         </div>
                         <div className='text-xs text-gray-300'>
-                            10 minutes ago
+                            {event?.createdAt ? moment(event?.createdAt).fromNow() : "sometime ago"}
                         </div>
                     </div>
                 })
@@ -310,7 +311,7 @@ export default function NotificationButton() {
                 </div>
 
                 {isSignedIn && showNotification &&
-                    <div className={`absolute top-14 pt-0 right-0 w-84 z-40`}>
+                    <div style={{ zIndex: 1000 }} className={`absolute top-14 pt-0 right-0 w-84`}>
                         <Card
                             className="h-[600px] bg-cardBg cursor-default shadow-4xl "
                             width='w-84'
