@@ -173,7 +173,7 @@ export default function NotificationButton() {
                 },
                 body: JSON.stringify({
                     userWalletAddress: accountId,
-                    apiKey: "iZnyDGy0UfMJMl1V3RMVq_4XixQk43",
+                    apiKey: "5yWbOW6yJkiX6m.oKcuZIP.S1i/oBg",
                     appName: "Demo App",
                 }),
             })
@@ -208,7 +208,7 @@ export default function NotificationButton() {
                     body: JSON.stringify({
                         walletAddress: accountId,
                         appName: "Demo App",
-                        apiKey: "iZnyDGy0UfMJMl1V3RMVq_4XixQk43",
+                        apiKey: "5yWbOW6yJkiX6m.oKcuZIP.S1i/oBg",
                     }),
                     headers: { "Content-type": "application/json; charset=UTF-8" }
                 })
@@ -232,7 +232,7 @@ export default function NotificationButton() {
             const res = await fetch("https://poc-production.up.railway.app/users/get", {
                 method: "POST",
                 body: JSON.stringify({
-                    apiKey: "iZnyDGy0UfMJMl1V3RMVq_4XixQk43",
+                    apiKey: "5yWbOW6yJkiX6m.oKcuZIP.S1i/oBg",
                     appName: "Demo App",
                     walletAddress: accountId,
                 }),
@@ -269,7 +269,7 @@ export default function NotificationButton() {
                 const res = await fetch("https://poc-production.up.railway.app/users/get", {
                     method: "POST",
                     body: JSON.stringify({
-                        apiKey: "iZnyDGy0UfMJMl1V3RMVq_4XixQk43",
+                        apiKey: "5yWbOW6yJkiX6m.oKcuZIP.S1i/oBg",
                         appName: "Demo App",
                         walletAddress: accountId,
                     }),
