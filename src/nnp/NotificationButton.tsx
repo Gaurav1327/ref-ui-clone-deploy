@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { Fragment, ReactElement, useContext, useEffect, useRef, useState } from "react";
+import React, { Fragment, ReactElement, useCallback, useContext, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { SolidButton } from "~components/button/Button";
 import { Card } from "~components/card/Card";
@@ -38,10 +38,10 @@ function EventList({ events, openSettings }: EventListProps) {
             </div>
         <div className="flex flex-col w-80 h-96 overflow-y-scroll overflow-x-hidden">
             {
-                events?.map((event: any) => {
+                events?.sort((a: any, b: any) => new Date(b?.createdAt).valueOf() - new Date(a?.createdAt).valueOf()).map((event: any) => {
                     return <div className='flex flex-col px-3 py-2 my-2 items-start rounded-lg bg-gray-600'>
                         <div className='text-xs text-white break-words text-left'>
-                            {parser.parseFromString(event?.message,'text/html').getElementsByTagName('p')[0]?.textContent}
+                            {event?.message.includes("<") ? parser.parseFromString(event?.message,'text/html').getElementsByTagName('p')[0]?.textContent : event?.message}
                         </div>
                         <div className='text-xs text-gray-300'>
                             {event?.createdAt ? moment(event?.createdAt).fromNow() : "sometime ago"}
@@ -57,7 +57,7 @@ function EventList({ events, openSettings }: EventListProps) {
 function AccountNotRegistered({ verifyOwner }: AccountNotRegisteredProps) {
     return (
         <div className="flex items-center justify-center text-white w-80 h-96" >
-            <span onClick={async () => await verifyOwner()}>Please sign in to register</span>
+            <SolidButton padding="" className="w-full" onClick={async () => await verifyOwner()}>Opt in for notifications</SolidButton>
         </div>
     );
 }
@@ -173,7 +173,7 @@ export default function NotificationButton() {
                 },
                 body: JSON.stringify({
                     userWalletAddress: accountId,
-                    apiKey: "5yWbOW6yJkiX6m.oKcuZIP.S1i/oBg",
+                    apiKey: "cWRH5JPB/pbR3V_9SJCQjEwds2D0ay",
                     appName: "Demo App",
                 }),
             })
@@ -192,23 +192,17 @@ export default function NotificationButton() {
         }
     );
 
-    console.log(eventList);
-    const handleVerifyOwner = async () => {
+    const handleVerifyOwner = useCallback(async () => {
         setLoading(true);
-        const wallet = await selector.wallet();
-
         try {
-            const owner = await wallet.verifyOwner({
-                message: "test message for verification",
-            });
 
-            if (owner) {
+            if (accountId) {
                 const res = await fetch("https://poc-production.up.railway.app/users/upsert", {
                     method: "POST",
                     body: JSON.stringify({
                         walletAddress: accountId,
                         appName: "Demo App",
-                        apiKey: "5yWbOW6yJkiX6m.oKcuZIP.S1i/oBg",
+                        apiKey: "cWRH5JPB/pbR3V_9SJCQjEwds2D0ay",
                     }),
                     headers: { "Content-type": "application/json; charset=UTF-8" }
                 })
@@ -225,14 +219,14 @@ export default function NotificationButton() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [accountId]);
 
     const getUser = async (accountId: string) => {
         try {
             const res = await fetch("https://poc-production.up.railway.app/users/get", {
                 method: "POST",
                 body: JSON.stringify({
-                    apiKey: "5yWbOW6yJkiX6m.oKcuZIP.S1i/oBg",
+                    apiKey: "cWRH5JPB/pbR3V_9SJCQjEwds2D0ay",
                     appName: "Demo App",
                     walletAddress: accountId,
                 }),
@@ -269,7 +263,7 @@ export default function NotificationButton() {
                 const res = await fetch("https://poc-production.up.railway.app/users/get", {
                     method: "POST",
                     body: JSON.stringify({
-                        apiKey: "5yWbOW6yJkiX6m.oKcuZIP.S1i/oBg",
+                        apiKey: "cWRH5JPB/pbR3V_9SJCQjEwds2D0ay",
                         appName: "Demo App",
                         walletAddress: accountId,
                     }),
