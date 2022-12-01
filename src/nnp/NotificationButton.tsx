@@ -62,6 +62,14 @@ function AccountNotRegistered({ verifyOwner }: AccountNotRegisteredProps) {
     );
 }
 
+function ConnectWallet() {
+    return (
+        <div className="flex items-center justify-center text-white w-80 h-96" >
+            <div className="w-full">Connect wallet to enable notifications</div>
+        </div>
+    );
+}
+
 function Loading({ className }: { className?: string }) {
     return (
         <div className={className ?? ""}>
@@ -303,7 +311,20 @@ export default function NotificationButton() {
                 <div className='cursor-pointer' onClick={() => setShowNotification(!showNotification)}>
                     <Notification />
                 </div>
-
+                {!isSignedIn && showNotification && (
+                    <div style={{ zIndex: 1000 }} className={`absolute top-14 pt-0 right-0 w-84`}>
+                    <Card
+                        className="h-[600px] bg-cardBg cursor-default shadow-4xl "
+                        width='w-84'
+                        padding="p-4"
+                        style={{
+                            border: '1px solid #415462',
+                        }}
+                    >
+                        {<ConnectWallet />}
+                    </Card>
+                </div>
+                )}
                 {isSignedIn && showNotification &&
                     <div style={{ zIndex: 1000 }} className={`absolute top-14 pt-0 right-0 w-84`}>
                         <Card
